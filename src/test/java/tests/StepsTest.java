@@ -8,25 +8,38 @@ import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static org.openqa.selenium.By.linkText;
 
 public class StepsTest {
+
+    private static final String REPOSITORY = "orazumov-pr/AllureReportTests";
+    private static final int ISSUE = 1;
+
     @Test
     public void testLambdaSteps() {
 
         SelenideLogger.addListener("allure", new AllureSelenide());
 
-        open("https://github.com/");
-
-        $(".input-button").click();
-        $("#query-builder-test").sendKeys("orazumov-pr/AllureReportTests");
-        $("#query-builder-test").submit();
-
-        $(linkText("orazumov-pr/AllureReportTests")).click();
-        $("[data-content='Issues']").click();
-        $(withText("#1")).should(Condition.exist);
-
+        step("Открываем главную страницу", () -> {
+            open("https://github.com");
+        });
+        step("Ищем репозиторий " + REPOSITORY, () -> {
+            $(".input-button").click();
+            $("#query-builder-test").sendKeys(REPOSITORY);
+            $("#query-builder-test").submit();
+        });
+        step("Кликаем по ссылке репозитория " + REPOSITORY, () -> {
+            $(linkText(REPOSITORY)).click();
+        });
+        step("Открываем таб Issues", () -> {
+            $("[data-content='Issues']").click();
+        });
+        step("Проверяем наличие Issue с номером " + ISSUE, () -> {
+            $(withText("#" + ISSUE)).should(Condition.exist);
+        });
     }
 
 }
+
 
