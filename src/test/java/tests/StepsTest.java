@@ -18,7 +18,6 @@ public class StepsTest {
 
     @Test
     public void testLambdaSteps() {
-
         SelenideLogger.addListener("allure", new AllureSelenide());
 
         step("Открываем главную страницу", () -> {
@@ -38,6 +37,18 @@ public class StepsTest {
         step("Проверяем наличие Issue с номером " + ISSUE, () -> {
             $(withText("#" + ISSUE)).should(Condition.exist);
         });
+    }
+
+    @Test
+    public void testAnnotatedStep() {
+        WebSteps steps = new WebSteps();
+
+        steps.openMainPage();
+        steps.searchForRepository(REPOSITORY);
+        steps.clickOnRepositoryLink(REPOSITORY);
+        steps.openIssueTab();
+        steps.shouldSeeIssueWithNumber(ISSUE);
+        steps.takeScreenshot();
     }
 
 }

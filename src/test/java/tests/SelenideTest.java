@@ -14,7 +14,6 @@ public class SelenideTest {
 
     @Test
     public void testIssueSearch() {
-
         SelenideLogger.addListener("allure", new AllureSelenide());
 
         open("https://github.com/");
