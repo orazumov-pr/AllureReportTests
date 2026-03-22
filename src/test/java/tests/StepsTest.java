@@ -10,10 +10,9 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static org.openqa.selenium.By.linkText;
 
-public class SelenideTest {
-
+public class StepsTest {
     @Test
-    public void testIssueSearch() {
+    public void testLambdaSteps() {
 
         SelenideLogger.addListener("allure", new AllureSelenide());
 
@@ -30,3 +29,4 @@ public class SelenideTest {
     }
 
 }
+
