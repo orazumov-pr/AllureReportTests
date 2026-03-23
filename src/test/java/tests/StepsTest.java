@@ -18,6 +18,7 @@ public class StepsTest {
 
     @Test
     public void testLambdaSteps() {
+        Screenshot screenshot = new Screenshot();
         SelenideLogger.addListener("allure", new AllureSelenide());
 
         step("Открываем главную страницу", () -> {
@@ -37,6 +38,8 @@ public class StepsTest {
         step("Проверяем наличие Issue с номером " + ISSUE, () -> {
             $(withText("#" + ISSUE)).should(Condition.exist);
         });
+
+        screenshot.takeScreenshot();
     }
 
     @Test
@@ -44,13 +47,14 @@ public class StepsTest {
 
         SelenideLogger.addListener("allure", new AllureSelenide());
         WebSteps steps = new WebSteps();
+        Screenshot screenshot = new Screenshot();
 
         steps.openMainPage();
         steps.searchForRepository(REPOSITORY);
         steps.clickOnRepositoryLink(REPOSITORY);
         steps.openIssueTab();
         steps.shouldSeeIssueWithNumber(ISSUE);
-        steps.takeScreenshot();
+        screenshot.takeScreenshot();
     }
 
 }
